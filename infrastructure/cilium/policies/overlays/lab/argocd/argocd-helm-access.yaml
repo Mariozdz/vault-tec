@@ -1,0 +1,19 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: argocd-helm-oci
+  namespace: argocd
+spec:
+  description: "Permite acceso HTTPS a repos Helm y OCI necesarios"
+  endpointSelector: {}
+
+  egress:
+    - toFQDNs:
+        - matchName: helm.releases.hashicorp.com
+        - matchName: charts.jetstack.io
+        - matchName: quay.io
+        - matchName: helm.cilium.io
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

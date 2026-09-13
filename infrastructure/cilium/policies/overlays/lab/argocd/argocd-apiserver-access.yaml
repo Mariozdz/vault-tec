@@ -1,0 +1,12 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: argocd-kube-apiserver
+  namespace: argocd
+spec:
+  description: "Permite acceso de Argo CD al Kubernetes API server"
+  endpointSelector: {}
+
+  egress:
+    - toEntities:
+        - kube-apiserver

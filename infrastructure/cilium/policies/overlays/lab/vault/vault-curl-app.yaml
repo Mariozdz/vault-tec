@@ -1,0 +1,21 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vault-ingress-controlled
+  namespace: vault
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: vault
+
+  ingress:
+    # app autorizada
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: curl-app
+            k8s:app: curl-app
+            k8s:security-tier: application
+      toPorts:
+        - ports:
+            - port: "8200"
+              protocol: TCP

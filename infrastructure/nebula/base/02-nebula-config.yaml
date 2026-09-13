@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nebula-vault-gateway-config
+  namespace: nebula
+data:
+  config.yml: |
+    pki:
+      ca: /etc/nebula/certs/ca.crt
+      cert: /etc/nebula/certs/host.crt
+      key: /etc/nebula/certs/host.key
+
+    static_host_map:
+      "10.10.0.1": ["57.154.11.172:4242"]
+
+    lighthouse:
+      am_lighthouse: false
+      hosts:
+        - "10.10.0.1"
+
+      local_allow_list:
+        interfaces:
+          'docker.*': false
+          'veth.*': false
+          'br-.*': false
+          'cni.*': false
+          'flannel.*': false
+          'nebula1': false
+        '10.244.0.0/16': false
+        '172.16.0.0/12': false
+        'fc00::/7': false
+        '0.0.0.0/0': true
+
+      remote_allow_list:
+        '10.244.0.0/16': false
+        '172.16.0.0/12': false
+        'fc00::/7': false
+        '0.0.0.0/0': true
+
+    listen:
+      host: 0.0.0.0
+      port: 4242
+
+    punchy:
+      punch: true
+      respond: true
+
+    relay:
+      am_relay: false
+      use_relays: false
+
+    tun:
+      disabled: false
+      dev: nebula1
+      mtu: 1300
+
+    logging:
+      level: info
+      format: text
+
+    firewall:
+      outbound_action: drop
+      inbound_action: drop
+
+      outbound:
+        - port: any
+          proto: any
+          host: any
+
+      inbound:
+        - port: any
+          proto: icmp
+          host: 10.10.0.20
+
+        - port: any
+          proto: icmp
+          host: 10.10.0.1

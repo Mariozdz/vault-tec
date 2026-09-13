@@ -1,0 +1,5 @@
+app:
+  trust:
+    namespace: cert-manager
+
+replicaCount: 1

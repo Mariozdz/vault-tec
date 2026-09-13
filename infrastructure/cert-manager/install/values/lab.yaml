@@ -1,0 +1,26 @@
+installCRDs: true
+
+podLabels:
+  app.kubernetes.io/name: cert-manager
+  app.kubernetes.io/component: controller
+  security-tier: platform
+
+replicaCount: 1
+
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+securityContext:
+  runAsNonRoot: true
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+prometheus:
+  enabled: false

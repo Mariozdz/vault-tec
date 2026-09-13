@@ -1,0 +1,84 @@
+global:
+  tlsDisable: false
+
+server:
+  extraLabels:
+    app.kubernetes.io/name-test: vault-server
+    app.kubernetes.io/component: server
+    security-tier: critical
+
+  service:
+    labels:
+      app.kubernetes.io/name-svc-test: vault-svc-test
+      security-tier: critical
+
+  image:
+    repository: hashicorp/vault
+    tag: "1.21.2"
+
+  standalone:
+    enabled: false
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 100
+    runAsGroup: 1000
+    fsGroup: 1000
+
+  volumes:
+    - name: vault-tls
+      secret:
+        secretName: vault-tls
+        defaultMode: 0400
+    - name: cluster-trust
+      configMap:
+        name: cluster-trust
+
+  volumeMounts:
+    - name: vault-tls
+      mountPath: /vault/ssl
+      readOnly: true
+    # - name: cluster-trust
+    #   mountPath: /etc/ssl/certs/cluster-ca.pem
+    #   subPath: ca.crt
+    #   readOnly: true
+
+  ha:
+    enabled: true
+    replicas: 1
+    raft:
+      enabled: true
+      setNodeId: true
+
+      config: |
+        ui = true
+
+        listener "tcp" {
+          address     = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+
+          tls_cert_file = "/vault/ssl/tls.crt"
+          tls_key_file = "/vault/ssl/tls.key"
+          
+          tls_client_ca_file = "/vault/ssl/ca.crt"
+          tls_disable_client_certs = "false"
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+        }
+
+        api_addr = "https://vault.vault.svc:8200"
+        service_registration "kubernetes" {}
+
+  dataStorage:
+    enabled: true
+    size: 1Gi
+
+injector:
+  enabled: true
+  extraLabels:
+    security-tier: critical
+
+ui:
+  enabled: true

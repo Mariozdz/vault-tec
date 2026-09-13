@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+  labels:
+    app.kubernetes.io/part-of: platform
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vault
+  labels:
+    app.kubernetes.io/part-of: security
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+  labels:
+    app.kubernetes.io/part-of: gitops
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: curl-app
+  labels:
+    app.kubernetes.io/part-of: apps
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nebula
+  labels:
+    app.kubernetes.io/name: nebula
+    app.kubernetes.io/part-of: vault-platform

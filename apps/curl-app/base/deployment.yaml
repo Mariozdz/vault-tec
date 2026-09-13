@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curl-app
+  namespace: curl-app
+  labels:
+    app: curl-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      security-tier: application
+      app: curl-app
+  template:
+    metadata:
+      labels:
+        app: curl-app
+        security-tier: application
+    spec:
+      containers:
+        - name: curl-app
+          image: governmentpaas/curl-ssl:49b59e8c30e33d120d4cca5a8f3b92ed808f52bc
+          command: ["sleep", "3600"]
+          env:
+            - name: SSL_CERT_FILE
+              value: /etc/pki/internal/ca.crt
+            - name: CURL_CA_BUNDLE
+              value: /etc/pki/internal/ca.crt
+          volumeMounts:
+            - name: cluster-trust
+              mountPath: /etc/pki/internal/ca.crt
+              subPath: ca.crt
+              readOnly: true
+            - name: vault-client-cert
+              mountPath: /etc/vault-client
+              readOnly: true
+      volumes:
+        - name: cluster-trust
+          configMap:
+            name: cluster-trust
+        - name: vault-client-cert
+          secret:
+            secretName: vault-client-test-tls

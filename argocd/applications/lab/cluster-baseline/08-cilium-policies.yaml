@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cilium-policies-lab
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-3"
+spec:
+  project: default
+
+  source:
+    repoURL: git@github.com:Mariozdz/vault-tec.git
+    targetRevision: main
+    path: infrastructure/cilium/policies/overlays/lab
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kube-system
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

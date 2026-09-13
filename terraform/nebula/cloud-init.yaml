@@ -1,0 +1,25 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - wget
+  - tar
+
+write_files:
+  - path: /usr/local/bin/install-nebula.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/usr/bin/env bash
+      set -euxo pipefail
+
+      cd /tmp
+      wget -O nebula-linux-amd64.tar.gz https://github.com/slackhq/nebula/releases/download/v1.10.3/nebula-linux-amd64.tar.gz
+      tar -xzf nebula-linux-amd64.tar.gz
+
+      install -m 0755 nebula /usr/local/bin/nebula
+      mkdir -p /etc/nebula
+
+runcmd:
+  - /usr/local/bin/install-nebula.sh
