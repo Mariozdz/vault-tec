@@ -14,10 +14,11 @@ helm upgrade --install cilium cilium/cilium \
   --namespace kube-system \
   --reuse-values \
   --set kubeProxyReplacement=true \
-  --set k8sServiceHost="${CLUSTER_NAME}-control-plane" \
+  --set k8sServiceHost=192.168.100.35 \
   --set k8sServicePort=6443 \
   --set ipam.mode=kubernetes \
   --set nodeinit.enabled=true \
+  --set operator.replicas=1 \
   --set hubble.relay.enabled=true \
   --set hubble.ui.enabled=true
 

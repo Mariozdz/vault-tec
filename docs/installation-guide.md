@@ -4,13 +4,13 @@
 
 Ver documentación:
 
-[Creación/configuración del cluster Kind](./02-cluster-setup.md)
+[Creación/configuración del cluster con k3s](./02-k3s-cluster-setup.md)
 
 Ejecutar:
 
 ```bash
-    chmod +x bootstrap/kind/00-cluster-initialization.sh
-    ./bootstrap/kind/00-cluster-initialization.sh
+    chmod +x bootstrap/k3s/00-initialize-k3s.sh
+    ./bootstrap/k3s/00-initialize-k3s.sh
 ```
 
 ---
