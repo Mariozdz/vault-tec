@@ -17,7 +17,7 @@ spec:
       valueFiles:
         - $values/infrastructure/vault/install/values/lab.yaml
 
-  - repoURL: git@github.com:Mariozdz/vault-tec.git
+  - repoURL: https://github.com/Mariozdz/vault-tec.git
     targetRevision: main
     ref: values
 

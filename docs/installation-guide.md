@@ -39,7 +39,7 @@ Ver documentación:
 Ejecutar:
 
 ```bash
-    chmod +x bootstrap/kind/03-install-argocd.sh
+    chmod +x ./bootstrap/scripts/03-install-argocd.sh 
     ./bootstrap/scripts/03-install-argocd.sh
 ```
 
@@ -56,9 +56,9 @@ Configurar repositorio (para este caso se utiliza la url HTTPS del repo de Gitla
 
 
 ```bash
-    kubectl create secret generic repo-gitops -n argocd --from-literal=type=git --from-literal=url=git@github.com:Mariozdz/vault-tec.git --from-literal=username=<username> --from-literal=password=<Token>
+    kubectl create secret generic repo-gitops -n argocd --from-literal=type=git --from-literal=url=https://github.com/Mariozdz/vault-tec.git --from-literal=username=<username> --from-literal=password=<Token>
 
-    kubectl label secret secret repo-gitops -n argocd argocd.argoproj.io/secret-type=repository
+    kubectl label secret repo-gitops -n argocd argocd.argoproj.io/secret-type=repository
 ```
 
 Una vez realizada la configuración de ArgoCD se puede continuar con el bootstrap de las applicaciones.

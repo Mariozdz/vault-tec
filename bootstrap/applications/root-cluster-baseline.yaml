@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: git@github.com:Mariozdz/vault-tec.git
+    repoURL: https://github.com/Mariozdz/vault-tec.git
     targetRevision: main
     path: argocd/applications/lab/cluster-baseline
 
