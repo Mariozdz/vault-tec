@@ -147,7 +147,7 @@ Validar:
 ```
 
 
-Nota: Vault no se presentará como "Synced" en ArgoCD hasta que se realice el proceso de desellado completamente.
+> Vault no se presentará como "Synced" en ArgoCD hasta que se realice el proceso de desellado completamente.
 ---
 
 ## 7. Inicializar y desellar Vault

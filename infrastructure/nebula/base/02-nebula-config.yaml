@@ -75,3 +75,7 @@ data:
         - port: any
           proto: icmp
           host: 10.10.0.1
+
+        - port: 8200
+          proto: tcp
+          host: 10.10.0.20

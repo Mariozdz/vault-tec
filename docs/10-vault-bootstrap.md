@@ -26,11 +26,12 @@ Ejecutar:
 
 ```bash
 
+kubectl exec -n vault -it vault-0 -- sh
+
 export VAULT_ADDR="https://vault.vault.svc.cluster.local:8200"
 export VAULT_CACERT="/vault/ssl/ca.crt"
 export VAULT_TOKEN="<INITIAL_ROOT_TOKEN>"
 
-kubectl exec -n vault -it vault-0 -- sh
 vault operator init
 ```
 
