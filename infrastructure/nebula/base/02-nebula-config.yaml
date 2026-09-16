@@ -11,7 +11,7 @@ data:
       key: /etc/nebula/certs/host.key
 
     static_host_map:
-      "10.10.0.1": ["57.154.11.172:4242"]
+      "10.10.0.1": ["20.163.108.148:4242"]
 
     lighthouse:
       am_lighthouse: false
