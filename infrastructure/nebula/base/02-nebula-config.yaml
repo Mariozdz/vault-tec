@@ -70,12 +70,12 @@ data:
       inbound:
         - port: any
           proto: icmp
-          host: 10.10.0.20/32
+          cidr: 10.10.0.20/32
 
         - port: any
           proto: icmp
-          host: 10.10.0.1/32
+          cidr: 10.10.0.1/32
 
         - port: 8200
           proto: tcp
-          host: 10.10.0.20/32
+          cidr: 10.10.0.20/32
