@@ -174,7 +174,91 @@ Resultado esperado:
 
 ---
 
-## 8. Aplicar políticas de Cilium (opcional)
+## 8. Configurar Nebula
+
+Ver documentación para generación de identidades y flujos de trabajo:
+
+[Funcionalidad de Nebula](./19-nebula-connectivity.md)
+
+Aplicar el Argocd Application:
+
+```bash
+    kubectl apply -f bootstrap/applications/root-network-platform.yaml
+```
+
+Validar:
+
+```bash
+    kubectl get pods -n nebula
+
+    # Logs de handshake y conexión a lighthouse y otros clientes.
+    kubectl -n nebula logs deploy/nebula-vault-gateway -c nebula
+
+    # Debuger para hacer ping
+    kubectl debug -n nebula -it pod/<<pod>> --image=nicolaka/netshoot --target=nebula
+
+```
+
+### 8.1 Instalar y configurar Lighthouse
+
+
+Instalar Nebula en el servidor que funcionará como Lighthouse y copiar los certificados y archivo de configuración correspondientes (se recomienda configurar como un servicio).
+
+[Ver ejemplo de configuración](../examples/nebula/lighthouse.yaml)
+
+Iniciar Nebula:
+
+```bash
+sudo nebula -config /etc/nebula/config.yml
+```
+
+Validar:
+
+```bash
+sudo systemctl status nebula
+```
+
+### 8.2 Instalar y configurar cliente
+
+Instalar Nebula en el equipo cliente y copiar (almacenar de manera segura y accesible):
+
+[Ver ejemplo de configuración](../examples/nebula/client.yaml)
+
+[Ejemplo montaje de lighthouse en Azure](../terraform/nebula/main.tf)
+
+- ca.crt
+- Certificado del cliente
+- Llave privada del cliente
+- config.yml
+
+Iniciar Nebula:
+
+```bash
+sudo nebula -config ./config.yml
+```
+
+Validar conectividad con el gateway:
+
+```bash
+ping 10.10.0.10
+```
+
+Validar acceso a Vault:
+
+```bash
+curl -vk https://10.10.0.10:8200/v1/sys/health
+```
+
+Resultado esperado:
+
+- Lighthouse disponible
+- Cliente conectado a la red Nebula
+- Comunicación con el gateway disponible
+- Vault accesible mediante la red privada
+
+---
+
+## 9. Aplicar políticas de Cilium (opcional)
 
 Añadir los recursos de ejemplo de politicas al archivo infrastructure/cilium/policies/overlays/lab/kustomization.yaml:
 
@@ -192,7 +276,7 @@ Resultado esperado:
 
 ---
 
-## 9. Desplegar aplicación demo (opcional)
+## 10. Desplegar aplicación demo (opcional)
 
 Aplicar el Application:
 
@@ -208,7 +292,7 @@ Validar:
 
 ---
 
-## 10. Validación final
+## 11. Validación final
 
 Ver documentación:
 
