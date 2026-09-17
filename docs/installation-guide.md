@@ -206,6 +206,8 @@ Instalar Nebula en el servidor que funcionará como Lighthouse y copiar los cert
 
 [Ver ejemplo de configuración](../examples/nebula/lighthouse.yaml)
 
+[Ejemplo montaje de lighthouse en Azure](../terraform/nebula/main.tf)
+
 Iniciar Nebula:
 
 ```bash
@@ -223,8 +225,6 @@ sudo systemctl status nebula
 Instalar Nebula en el equipo cliente y copiar (almacenar de manera segura y accesible):
 
 [Ver ejemplo de configuración](../examples/nebula/client.yaml)
-
-[Ejemplo montaje de lighthouse en Azure](../terraform/nebula/main.tf)
 
 - ca.crt
 - Certificado del cliente
